@@ -1,7 +1,7 @@
 package br.edu.ifpb.decexpress.model.entity;
 
 import br.edu.ifpb.decexpress.utils.formatter.StringUpperCaseListener;
-import br.edu.ifpb.decexpress.utils.nivelTurma;
+import br.edu.ifpb.decexpress.utils.NivelTurma;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,9 +30,9 @@ public class Turma implements Serializable {
     private Integer serie;
     private Integer ano;
     @Enumerated(EnumType.STRING)
-    private nivelTurma nivel;
-    @Column(length = 1, columnDefinition = "CHAR(1)")
-    private char turma;
+    private NivelTurma nivel;
+    @Column(length = 1)
+    private Character turma;
     @Column(name = "st_registro")
     private Integer stRegistro;
 }

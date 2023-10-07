@@ -15,7 +15,7 @@ public interface TurmaService {
 
     List<TurmaView> listar() throws ServiceApplicationException;
 
-    TurmaView alterar(Long codTurma, TurmaForm dto) throws ServiceApplicationException;
+    void alterar(Long codTurma, TurmaForm dto) throws ServiceApplicationException;
 
     void deletar(Long codTurma) throws ServiceApplicationException;
 

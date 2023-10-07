@@ -1,20 +1,19 @@
 package br.edu.ifpb.decexpress.controller;
 
-import br.edu.ifpb.decexpress.model.entity.Turma;
+import br.edu.ifpb.decexpress.model.use_case.manter_turma.dto.TurmaForm;
 import br.edu.ifpb.decexpress.model.use_case.manter_turma.dto.TurmaView;
 import br.edu.ifpb.decexpress.model.use_case.manter_turma.service.TurmaService;
-import br.edu.ifpb.decexpress.utils.exception.ServiceApplicationException;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/turma")
+
 public class TurmaController {
 
     private final TurmaService turmaService;
@@ -26,11 +25,41 @@ public class TurmaController {
 
     @GetMapping()
     @Operation(summary = "Listar Turmas")
-    public List<TurmaView> listarAllTurmas(){
-        try {
-            return turmaService.listar();
-        } catch (ServiceApplicationException e) {
-            throw new RuntimeException(e);
+    public ResponseEntity<List<TurmaView>> listarAllTurmas() {
+        List<TurmaView> listaReturn = turmaService.listar();
+        if (listaReturn == null || listaReturn.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
+        return new ResponseEntity<>(listaReturn, HttpStatus.OK);
+
+    }
+
+    @GetMapping("/{codTurma}")
+    @Operation(summary = "Pesquisar turma por código")
+    public ResponseEntity<TurmaView> pesquisarTurmaPorId(@PathVariable("codTurma") Long codTurma) {
+        return new ResponseEntity<>(this.turmaService.pesquisarTurma(codTurma), HttpStatus.OK);
+    }
+
+
+    @DeleteMapping(value = "/{codTurma}")
+    @Operation(summary = "Deletar uma Turma")
+    public ResponseEntity deletarTurmaPorCodigo(@PathVariable Long codTurma) {
+        this.turmaService.deletar(codTurma);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+    }
+
+    @PutMapping(value = {"/{codTurma}"})
+    @Operation(summary = "Alterar uma Turma")
+    public ResponseEntity<String> alterarTurma(@PathVariable Long codTurma, @RequestBody TurmaForm turmaForm) {
+        this.turmaService.alterar(codTurma, turmaForm);
+        return new ResponseEntity<>("Turma alterada com Sucesso", HttpStatus.OK);
+    }
+
+    @PostMapping
+    @Operation(summary = "Cadastrar turma")
+    public ResponseEntity<String> cadastrarTurma(@RequestBody TurmaForm turmaForm) {
+        this.turmaService.inserir(turmaForm);
+        return new ResponseEntity<>("Turma Cadastrada com Sucesso", HttpStatus.OK);
     }
 }

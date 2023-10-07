@@ -54,6 +54,7 @@ public class Aluno implements Serializable {
     @Column(name = "st_registro")
     private Integer stRegistro;
 
+
     @PrePersist
     public void stSituacao() {
         this.stRegistro = GlobalConstantes.ST_ATIVO;

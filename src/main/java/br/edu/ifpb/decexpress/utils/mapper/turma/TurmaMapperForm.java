@@ -2,6 +2,7 @@ package br.edu.ifpb.decexpress.utils.mapper.turma;
 
 import br.edu.ifpb.decexpress.model.entity.Turma;
 import br.edu.ifpb.decexpress.model.use_case.manter_turma.dto.TurmaForm;
+import br.edu.ifpb.decexpress.utils.GlobalConstantes;
 import br.edu.ifpb.decexpress.utils.mapper.Mapper;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ public class TurmaMapperForm implements Mapper<TurmaForm, Turma> {
         turma.setAno(object.ano());
         turma.setNivel(object.nivel());
         turma.setTurma(object.turma());
+        turma.setStRegistro(GlobalConstantes.ST_ATIVO);
 
         return turma;
     }

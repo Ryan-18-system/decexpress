@@ -4,7 +4,7 @@ import br.edu.ifpb.decexpress.utils.message.MessageBundle;
 
 import java.io.Serial;
 
-public class ServiceApplicationException extends Exception {
+public class ServiceApplicationException extends RuntimeException {
     @Serial
     private static final long serialVersionUID = -3538495919342954385L;
     private static final String MESSAGE_DEFAUT = "message.default";
