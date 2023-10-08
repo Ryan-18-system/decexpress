@@ -32,7 +32,7 @@ public class Turma implements Serializable {
     @Enumerated(EnumType.STRING)
     private NivelTurma nivel;
     @Column(length = 1)
-    private Character turma;
+    private char turma;
     @Column(name = "st_registro")
     private Integer stRegistro;
 }

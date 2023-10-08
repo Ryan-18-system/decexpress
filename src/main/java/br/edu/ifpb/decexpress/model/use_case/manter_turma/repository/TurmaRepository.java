@@ -13,12 +13,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface TurmaRepository extends JpaRepository<Turma,Long> {
+public interface TurmaRepository extends JpaRepository<Turma, Long> {
 
-    @Query("SELECT turma from Turma where stRegistro=1")
+    @Query(value = " SELECT * FROM dec_express.tb_turma tt WHERE tt.st_registro  = 1", nativeQuery = true)
     List<Turma> findByStRegistro1();
+
     @Query("SELECT turma from Turma where stRegistro=1 and codTurma = :codTurma")
     Optional<Turma> findBtIdRegistro1(@Param("codTurma") Long codTurma);
+
     @Query("SELECT t FROM Turma t WHERE t.serie = :serie AND t.turma = upper(:turma) AND t.nivel = :nivel AND t.stRegistro = 1")
     Optional<Turma> findBySerieTurmaNivel(
             @Param("serie") Integer serie,

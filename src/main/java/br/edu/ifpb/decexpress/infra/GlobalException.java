@@ -22,6 +22,7 @@ public class GlobalException {
     @ExceptionHandler(value = {RuntimeException.class, PersistenceException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<ErrorDTO> handleRuntimeException(RuntimeException ex) {
+        ex.printStackTrace();
         ErrorDTO errorDTO = new ErrorDTO();
         errorDTO.setMensagem("Ocorreu um erro interno no servidor.");
         errorDTO.setDetalhes(ex.getMessage()); // Você pode personalizar os detalhes da exceção aqui

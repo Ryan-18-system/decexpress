@@ -6,5 +6,5 @@ public record TurmaForm (
         Integer serie,
         Integer ano,
         NivelTurma nivel,
-        Character turma
+        char turma
 ){}

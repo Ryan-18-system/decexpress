@@ -10,7 +10,7 @@ public record TurmaView(
         Integer serie,
         Integer ano,
         NivelTurma nivel,
-        Character turma,
+        char turma,
         List<AlunoView> listaAlunos
 ) {
 }
