@@ -13,10 +13,10 @@ public interface AlunoService {
     AlunoView inserir(AlunoForm dto) throws ServiceApplicationException;
     List<AlunoView> listar() throws ServiceApplicationException;
 
-    AlunoView alterar(Long codAluno, AlunoForm dto) throws ServiceApplicationException;
+    AlunoView alterar(Long matriculaAluno, AlunoForm dto) throws ServiceApplicationException;
 
-    void deletar(Long codAluno) throws ServiceApplicationException;
+    void deletar(Long matriculaAluno) throws ServiceApplicationException;
 
-    AlunoView pesquisarAluno(Long codAluno) throws  ServiceApplicationException;
+    AlunoView pesquisarAluno(Long matriculaAluno) throws  ServiceApplicationException;
 
 }

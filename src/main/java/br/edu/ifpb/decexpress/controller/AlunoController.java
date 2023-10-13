@@ -5,9 +5,10 @@ import br.edu.ifpb.decexpress.model.use_case.manter_aluno.dto.AlunoForm;
 import br.edu.ifpb.decexpress.model.use_case.manter_aluno.dto.AlunoView;
 import br.edu.ifpb.decexpress.model.use_case.manter_aluno.service.AlunoService;
 import br.edu.ifpb.decexpress.utils.exception.ServiceApplicationException;
-import br.edu.ifpb.decexpress.utils.message.MessageBundle;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,15 +29,53 @@ public class AlunoController {
 
     @PostMapping()
     @Operation(summary = "Cadastrar um aluno")
-    public void cadastrarAluno(@RequestBody AlunoForm alunoForm) {
+    public ResponseEntity<AlunoView> cadastrarAluno(@RequestBody AlunoForm alunoForm) {
+        try {
+            return new ResponseEntity<>(this.alunoService.inserir(alunoForm), HttpStatus.OK);
+        } catch (ServiceApplicationException e) {
+            throw new RuntimeException(e);
+        }
     }
+
     @GetMapping
     @Operation(summary = "Listar Alunos")
-    public List<AlunoView> listarAluno(){
-        try{
-            return  this.alunoService.listar();
-        }catch (ServiceApplicationException e){
-            throw  new RuntimeException(e);
+    public ResponseEntity<List<AlunoView>> listarAluno() {
+        try {
+            return new ResponseEntity<>(this.alunoService.listar(), HttpStatus.OK);
+        } catch (ServiceApplicationException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @PutMapping(value = "/{matriculaAluno}")
+    @Operation(summary = "Alterar Aluno por Matrícula")
+    public ResponseEntity<AlunoView> alterarAluno(@PathVariable("matriculaAluno") Long matriculaAluno,
+                                                  @RequestBody AlunoForm alunoForm) {
+        try {
+            return new ResponseEntity<>(this.alunoService.alterar(matriculaAluno, alunoForm), HttpStatus.OK);
+        } catch (ServiceApplicationException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @GetMapping(value = "/{matriculaAluno}")
+    @Operation(summary = "Pesquisar Aluno Por matrícula")
+    public ResponseEntity<AlunoView> pesquisarAlunoPorMatricula(@PathVariable("matriculaAluno") Long matriculaAluno) {
+        try {
+            return new ResponseEntity<>(this.alunoService.pesquisarAluno(matriculaAluno), HttpStatus.OK);
+        } catch (ServiceApplicationException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @DeleteMapping(value = "/{matriculaAluno}")
+    @Operation(summary = "Deletar aluno por matrícula")
+    public ResponseEntity deletarAlunoPorMatricula(@PathVariable("matriculaAluno") Long matriculaAluno) {
+        try {
+            this.alunoService.deletar(matriculaAluno);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (ServiceApplicationException e) {
+            throw new RuntimeException(e);
         }
     }
 }

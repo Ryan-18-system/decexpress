@@ -3,10 +3,7 @@ package br.edu.ifpb.decexpress.model.entity;
 import br.edu.ifpb.decexpress.utils.formatter.StringUpperCaseListener;
 import br.edu.ifpb.decexpress.utils.NivelTurma;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -18,6 +15,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners({StringUpperCaseListener.class})
+@Builder
 public class Turma implements Serializable {
 
     @Serial
@@ -35,4 +33,8 @@ public class Turma implements Serializable {
     private char turma;
     @Column(name = "st_registro")
     private Integer stRegistro;
+
+    public Turma(Long codTurma) {
+        this.codTurma = codTurma;
+    }
 }

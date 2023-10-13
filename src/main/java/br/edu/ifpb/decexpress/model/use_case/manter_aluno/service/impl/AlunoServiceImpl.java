@@ -1,50 +1,76 @@
 package br.edu.ifpb.decexpress.model.use_case.manter_aluno.service.impl;
 
+import br.edu.ifpb.decexpress.model.entity.Aluno;
+import br.edu.ifpb.decexpress.model.entity.Turma;
 import br.edu.ifpb.decexpress.model.use_case.manter_aluno.dto.AlunoForm;
 import br.edu.ifpb.decexpress.model.use_case.manter_aluno.dto.AlunoView;
 import br.edu.ifpb.decexpress.model.use_case.manter_aluno.repository.AlunoRepository;
 import br.edu.ifpb.decexpress.model.use_case.manter_aluno.service.AlunoService;
+import br.edu.ifpb.decexpress.utils.GlobalConstantes;
 import br.edu.ifpb.decexpress.utils.exception.ServiceApplicationException;
+import br.edu.ifpb.decexpress.utils.mapper.aluno.AlunoMapperForm;
 import br.edu.ifpb.decexpress.utils.mapper.aluno.AlunoMapperView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AlunoServiceImpl implements AlunoService {
     private final AlunoMapperView alunoMapperView;
     private final AlunoRepository alunoRepository;
+    private final AlunoMapperForm alunoMapperForm;
 
     @Autowired
 
-    public AlunoServiceImpl(AlunoMapperView alunoMapperView, AlunoRepository alunoRepository) {
+    public AlunoServiceImpl(AlunoMapperView alunoMapperView, AlunoRepository alunoRepository, AlunoMapperForm alunoMapperForm) {
         this.alunoMapperView = alunoMapperView;
         this.alunoRepository = alunoRepository;
+        this.alunoMapperForm = alunoMapperForm;
     }
 
     @Override
+    @Transactional
     public AlunoView inserir(AlunoForm dto) throws ServiceApplicationException {
-        return null;
-    }
+        Aluno novoAluno = this.alunoMapperForm.map(dto);
+        this.alunoRepository.save(novoAluno);
+        return this.alunoMapperView.map(novoAluno);
+    }// inserir
 
     @Override
     public List<AlunoView> listar() throws ServiceApplicationException {
-        return alunoMapperView.mapCollection(this.alunoRepository.findAll());
+        return alunoMapperView.mapCollection(this.alunoRepository.findByStRegistro1());
     }
+
+    @Transactional
+    public AlunoView alterar(Long matriculaAluno, AlunoForm dto) throws ServiceApplicationException {
+        Optional<Aluno> alunoBanco = this.alunoRepository.findAlunoByMatricula(matriculaAluno);
+        if (alunoBanco.isEmpty()) {
+            throw new ServiceApplicationException("erro.aluno.nao.encontrado");
+        }
+        this.alunoMapperForm.mapAlteracao(dto, alunoBanco.get());
+        return this.alunoMapperView.map(alunoBanco.get());
+
+    }// alterar
 
     @Override
-    public AlunoView alterar(Long codAluno, AlunoForm dto) throws ServiceApplicationException {
-        return null;
-    }
+    @Transactional
+    public void deletar(Long matriculaAluno) throws ServiceApplicationException {
+        Optional<Aluno> alunoBanco = this.alunoRepository.findAlunoByMatricula(matriculaAluno);
+        if (alunoBanco.isEmpty()) {
+            throw new ServiceApplicationException("erro.aluno.nao.encontrado");
+        }
+        alunoBanco.get().setStRegistro(GlobalConstantes.ST_INATIVO);
+    }// deletar
 
     @Override
-    public void deletar(Long codAluno) throws ServiceApplicationException {
-
-    }
-
-    @Override
-    public AlunoView pesquisarAluno(Long codAluno) throws ServiceApplicationException {
-        return null;
-    }
+    public AlunoView pesquisarAluno(Long matriculaAluno) throws ServiceApplicationException {
+        Optional<Aluno> alunoBanco = this.alunoRepository.findAlunoByMatricula(matriculaAluno);
+        if (alunoBanco.isEmpty()) {
+            throw new ServiceApplicationException("erro.aluno.nao.encontrado");
+        }
+        return this.alunoMapperView.map(alunoBanco.get());
+    }// pesquisar
 }
