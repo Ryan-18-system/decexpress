@@ -1,5 +1,6 @@
 package br.edu.ifpb.decexpress.controller;
 
+import br.edu.ifpb.decexpress.infra.securityDec.SecurityDec;
 import br.edu.ifpb.decexpress.model.use_case.manter_turma.dto.TurmaForm;
 import br.edu.ifpb.decexpress.model.use_case.manter_turma.dto.TurmaView;
 import br.edu.ifpb.decexpress.model.use_case.manter_turma.service.TurmaService;
@@ -25,6 +26,7 @@ public class TurmaController {
 
     @GetMapping()
     @Operation(summary = "Listar Turmas")
+    @SecurityDec
     public ResponseEntity<List<TurmaView>> listarAllTurmas() {
         List<TurmaView> listaReturn = turmaService.listar();
         if (listaReturn == null || listaReturn.isEmpty()) {
