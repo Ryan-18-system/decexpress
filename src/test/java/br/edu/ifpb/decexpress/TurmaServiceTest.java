@@ -34,7 +34,16 @@ public class TurmaServiceTest {
     }
 
     @Test(expected = ServiceApplicationException.class)
-    public void testInserirDuplicado() {
+    public void testInserirTurma() {
+        TurmaForm turmaForm = new TurmaForm(7, 2023, NivelTurma.ENSINO_FUNDAMENTAL_II, 'Z');
+
+        when(turmaRepository.findBySerieTurmaNivel(7, 'Z', NivelTurma.ENSINO_FUNDAMENTAL_II)).thenReturn(Optional.of(new Turma()));
+
+        turmaService.inserir(turmaForm);
+    }
+
+    @Test(expected = ServiceApplicationException.class)
+    public void testInserirTurmaDuplicada() {
         TurmaForm turmaForm = new TurmaForm(1, 2023, NivelTurma.ENSINO_MEDIO, 'A');
 
         when(turmaRepository.findBySerieTurmaNivel(1, 'A', NivelTurma.ENSINO_MEDIO)).thenReturn(Optional.of(new Turma()));

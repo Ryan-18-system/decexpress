@@ -48,7 +48,7 @@ public class AlunoServiceTest {
     }
 
     @Test
-    public void testDeletar() {
+    public void testDeletarAluno() {
         Long matriculaAluno = 1L;
         Aluno aluno = new Aluno();
 
