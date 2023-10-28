@@ -18,4 +18,6 @@ public interface AlunoRepository extends JpaRepository<Aluno, Long> {
 
     @Query(value = " SELECT * FROM dec_express.tb_aluno aa WHERE aa.st_registro  = 1", nativeQuery = true)
     List<Aluno> findByStRegistro1();
+    @Query(value = " SELECT * FROM dec_express.tb_aluno aa WHERE aa.cod_turma  = :codTurma", nativeQuery = true)
+    List<Aluno> findAlunoByCodTurma(@Param("codTurma") Long codTurma);
 }

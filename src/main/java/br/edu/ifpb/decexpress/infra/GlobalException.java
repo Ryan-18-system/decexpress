@@ -1,5 +1,6 @@
 package br.edu.ifpb.decexpress.infra;
 
+import br.edu.ifpb.decexpress.utils.exception.AuthTokenException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceException;
 import org.springframework.http.HttpStatus;
@@ -28,5 +29,14 @@ public class GlobalException {
         errorDTO.setDetalhes(ex.getMessage()); // Você pode personalizar os detalhes da exceção aqui
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorDTO);
+    }
+    @ExceptionHandler(value = {AuthTokenException.class})
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ResponseEntity<ErrorDTO> handleAuthTokenException(AuthTokenException ex) {;
+        ErrorDTO errorDTO = new ErrorDTO();
+        errorDTO.setMensagem("Recurso Não Autorizado");
+        errorDTO.setDetalhes(ex.getMessage()); // Você pode personalizar os detalhes da exceção aqui
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorDTO);
     }
 }
