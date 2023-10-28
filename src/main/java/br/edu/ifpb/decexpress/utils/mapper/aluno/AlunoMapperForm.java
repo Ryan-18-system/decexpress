@@ -19,7 +19,7 @@ public class AlunoMapperForm implements Mapper<AlunoForm, Aluno> {
         aluno.setDataNascimento(this.convertToLocalDateToDate(object.dataNascimento()));
         aluno.setCpf(object.cpf());
         aluno.setRg(object.cpf());
-        aluno.setMatricula(new Random().nextLong());
+        aluno.setMatricula(gerarMatriculaAleatoria());
         aluno.setTelefone(Long.valueOf(object.telefone()));
         aluno.setEmail(object.email());
         aluno.setEndereco(object.endereco());
@@ -48,6 +48,11 @@ public class AlunoMapperForm implements Mapper<AlunoForm, Aluno> {
     private Date convertToLocalDateToDate(LocalDate localDate) {
         ZoneId defaultZoneId = ZoneId.systemDefault();
         return Date.from(localDate.atStartOfDay(defaultZoneId).toInstant());
+    }
+
+    private long gerarMatriculaAleatoria() {
+        Random random = new Random();
+        return 10000L + random.nextInt(90000);
     }
 
 }
