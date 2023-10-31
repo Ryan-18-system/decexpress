@@ -20,20 +20,20 @@ public class DecExpressInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if (handler instanceof HandlerMethod) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
-//            if (handlerMethod.hasMethodAnnotation(SecurityDec.class)
-//                    || handlerMethod.getBeanType().isAnnotationPresent(SecurityDec.class)) {
-//                String authorizationHeader = request.getHeader("Authorization");
-//                if (authorizationHeader != null) {
-//                    TokenDTO novoToken = new TokenDTO(authorizationHeader);
-//                   boolean tokenValidate = tokenService.authToken(novoToken);
-//                    if (!tokenValidate){
-//                        throw new AuthTokenException("erro.nao.autorizado");
-//                    }
-//                } else {
-//                    throw new AuthTokenException("erro.ao.obter.token");
-//                }
-//                return true;
-//            }
+            if (handlerMethod.hasMethodAnnotation(SecurityDec.class)
+                    || handlerMethod.getBeanType().isAnnotationPresent(SecurityDec.class)) {
+                String authorizationHeader = request.getHeader("Authorization");
+                if (authorizationHeader != null) {
+                    TokenDTO novoToken = new TokenDTO(authorizationHeader);
+                   boolean tokenValidate = tokenService.authToken(novoToken);
+                    if (!tokenValidate){
+                        throw new AuthTokenException("erro.nao.autorizado");
+                    }
+                } else {
+                    throw new AuthTokenException("erro.ao.obter.token");
+                }
+                return true;
+            }
         }
         return true;
     }
