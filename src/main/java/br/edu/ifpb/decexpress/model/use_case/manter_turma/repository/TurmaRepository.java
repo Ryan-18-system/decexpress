@@ -18,7 +18,7 @@ public interface TurmaRepository extends JpaRepository<Turma, Long> {
     @Query(value = " SELECT * FROM dec_express.tb_turma tt WHERE tt.st_registro  = 1", nativeQuery = true)
     List<Turma> findByStRegistro1();
 
-    @Query("SELECT turma from Turma where stRegistro=1 and codTurma = :codTurma")
+    @Query(value = "SELECT * FROM dec_express.tb_turma tt WHERE tt.st_registro  = 1 and tt.cod_turma = :codTurma", nativeQuery = true)
     Optional<Turma> findBtIdRegistro1(@Param("codTurma") Long codTurma);
 
     @Query("SELECT t FROM Turma t WHERE t.serie = :serie AND t.turma = upper(:turma) AND t.nivel = :nivel AND t.stRegistro = 1")

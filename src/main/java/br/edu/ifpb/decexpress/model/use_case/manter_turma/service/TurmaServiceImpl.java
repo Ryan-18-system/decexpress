@@ -87,6 +87,7 @@ public class TurmaServiceImpl implements TurmaService {
         if (turmaBanco.isEmpty()) {
             throw new ServiceApplicationException("erro.pesquisar.turma");
         }// if
-        return this.turmaMapperView.map(turmaBanco.get());
+        TurmaView retorno = this.turmaMapperView.map(turmaBanco.get());
+        return retorno;
     }// pesquisarTurma
 }
