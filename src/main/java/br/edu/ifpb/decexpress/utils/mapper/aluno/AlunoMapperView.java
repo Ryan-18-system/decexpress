@@ -4,14 +4,18 @@ import br.edu.ifpb.decexpress.model.entity.Aluno;
 import br.edu.ifpb.decexpress.model.use_case.manter_aluno.dto.AlunoForm;
 import br.edu.ifpb.decexpress.model.use_case.manter_aluno.dto.AlunoView;
 import br.edu.ifpb.decexpress.utils.mapper.Mapper;
+import br.edu.ifpb.decexpress.utils.mapper.turma.TurmaMapperForm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+
 @Component
 public class AlunoMapperView implements Mapper<Aluno, AlunoView> {
+
+
+    @Autowired
+    private TurmaMapperForm turmaMapperForm;
     @Override
     public AlunoView map(Aluno object) {
         AlunoView retorno = new AlunoView();
@@ -23,7 +27,11 @@ public class AlunoMapperView implements Mapper<Aluno, AlunoView> {
         retorno.setMatricula(object.getMatricula());
         retorno.setTelefone(object.getTelefone().toString());
         retorno.setEmail(object.getEmail());
+        if(!Objects.isNull(object.getCodTurma())){
+           retorno.setTurma(this.turmaMapperForm.mapInverso(object.getCodTurma()));
+        }
         retorno.setEndereco(object.getEndereco());
+
         return retorno;
     }
 

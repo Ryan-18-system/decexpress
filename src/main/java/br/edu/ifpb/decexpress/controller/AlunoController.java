@@ -32,7 +32,7 @@ public class AlunoController {
 
     @PostMapping()
     @Operation(summary = "Cadastrar um aluno")
-    @SecurityDec
+    @SecurityDec(accessAllowed = false)
     public ResponseEntity<AlunoView> cadastrarAluno(@RequestBody AlunoForm alunoForm) {
         try {
             return new ResponseEntity<>(this.alunoService.inserir(alunoForm), HttpStatus.OK);

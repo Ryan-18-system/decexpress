@@ -23,6 +23,14 @@ public class TurmaMapperForm implements Mapper<TurmaForm, Turma> {
 
         return turma;
     }
+    public TurmaForm mapInverso(Turma turma){
+        return TurmaForm.builder()
+                .turma(turma.getTurma())
+                .ano(turma.getAno())
+                .nivel(turma.getNivel())
+                .serie(turma.getSerie())
+                .build();
+    }
 
     @Override
     public List<Turma> mapCollection(Collection<TurmaForm> objects) {

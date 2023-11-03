@@ -19,4 +19,5 @@ public interface AlunoService {
 
     AlunoView pesquisarAluno(Long matriculaAluno) throws  ServiceApplicationException;
 
+
 }

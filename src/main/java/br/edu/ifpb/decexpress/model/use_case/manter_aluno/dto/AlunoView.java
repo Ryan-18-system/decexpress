@@ -1,6 +1,7 @@
 package br.edu.ifpb.decexpress.model.use_case.manter_aluno.dto;
 
 import br.edu.ifpb.decexpress.model.entity.Endereco;
+import br.edu.ifpb.decexpress.model.use_case.manter_turma.dto.TurmaForm;
 import br.edu.ifpb.decexpress.utils.formatter.FormatarCampo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
@@ -27,4 +28,5 @@ public class AlunoView implements Serializable {
     private String telefone;
     private String email;
     private Endereco endereco;
+    private TurmaForm turma;
 }

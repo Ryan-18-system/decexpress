@@ -38,7 +38,7 @@ public class TurmaController {
 
     @GetMapping("/{codTurma}")
     @Operation(summary = "Pesquisar turma por código")
-    @SecurityDec
+    @SecurityDec(accessAllowed = false)
     public ResponseEntity<TurmaView> pesquisarTurmaPorId(@PathVariable("codTurma") Long codTurma) {
         return new ResponseEntity<>(this.turmaService.pesquisarTurma(codTurma), HttpStatus.OK);
     }
@@ -46,7 +46,7 @@ public class TurmaController {
 
     @DeleteMapping(value = "/{codTurma}")
     @Operation(summary = "Deletar uma Turma")
-    @SecurityDec
+    @SecurityDec(accessAllowed = false)
     public ResponseEntity deletarTurmaPorCodigo(@PathVariable Long codTurma) {
         this.turmaService.deletar(codTurma);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -55,7 +55,7 @@ public class TurmaController {
 
     @PutMapping(value = {"/{codTurma}"})
     @Operation(summary = "Alterar uma Turma")
-    @SecurityDec
+    @SecurityDec(accessAllowed = false)
     public ResponseEntity<String> alterarTurma(@PathVariable Long codTurma, @RequestBody TurmaForm turmaForm) {
         this.turmaService.alterar(codTurma, turmaForm);
         return new ResponseEntity<>("Turma alterada com Sucesso", HttpStatus.OK);
@@ -63,10 +63,12 @@ public class TurmaController {
 
     @PostMapping
     @Operation(summary = "Cadastrar turma")
-    @SecurityDec
+    @SecurityDec(accessAllowed = false)
     public ResponseEntity<String> cadastrarTurma(@RequestBody TurmaForm turmaForm) {
         this.turmaService.inserir(turmaForm);
         return new ResponseEntity<>("Turma Cadastrada com Sucesso", HttpStatus.OK);
     }
+
+
 
 }
