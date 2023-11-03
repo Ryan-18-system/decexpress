@@ -17,6 +17,7 @@ public record AlunoForm(String nome,
                         String rg,
                         String telefone,
                         String email,
+                        Long matricula,
                         Endereco endereco,
                         Long codTurma) implements Serializable {
 }

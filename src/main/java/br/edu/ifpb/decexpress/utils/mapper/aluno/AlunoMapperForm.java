@@ -19,7 +19,7 @@ public class AlunoMapperForm implements Mapper<AlunoForm, Aluno> {
         aluno.setDataNascimento(this.convertToLocalDateToDate(object.dataNascimento()));
         aluno.setCpf(object.cpf());
         aluno.setRg(object.cpf());
-        aluno.setMatricula(gerarMatriculaAleatoria());
+        aluno.setMatricula(object.matricula());
         aluno.setTelefone(Long.valueOf(object.telefone()));
         aluno.setEmail(object.email());
         aluno.setEndereco(object.endereco());
