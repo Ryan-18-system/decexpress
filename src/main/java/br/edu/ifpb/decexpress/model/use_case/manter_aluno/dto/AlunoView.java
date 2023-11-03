@@ -8,11 +8,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AlunoView {
+public class AlunoView implements Serializable {
+
     private Long codAluno;
     private String nome;
     @JsonFormat(pattern = "dd/MM/yyyy", timezone = "GMT")

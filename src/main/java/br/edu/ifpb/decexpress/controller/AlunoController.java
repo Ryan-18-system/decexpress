@@ -43,7 +43,6 @@ public class AlunoController {
 
     @GetMapping
     @Operation(summary = "Listar Alunos")
-    @SecurityDec
     public ResponseEntity<List<AlunoView>> listarAluno() {
         try {
             return new ResponseEntity<>(this.alunoService.listar(), HttpStatus.OK);
@@ -66,7 +65,6 @@ public class AlunoController {
 
     @GetMapping(value = "/{matriculaAluno}")
     @Operation(summary = "Pesquisar Aluno Por matrícula")
-    @SecurityDec
     public ResponseEntity<AlunoView> pesquisarAlunoPorMatricula(@PathVariable("matriculaAluno") Long matriculaAluno) {
         try {
             return new ResponseEntity<>(this.alunoService.pesquisarAluno(matriculaAluno), HttpStatus.OK);

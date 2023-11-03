@@ -11,6 +11,9 @@ import br.edu.ifpb.decexpress.utils.exception.ServiceApplicationException;
 import br.edu.ifpb.decexpress.utils.mapper.aluno.AlunoMapperForm;
 import br.edu.ifpb.decexpress.utils.mapper.aluno.AlunoMapperView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +36,7 @@ public class AlunoServiceImpl implements AlunoService {
 
     @Override
     @Transactional
+    @CacheEvict(cacheNames = "alunos",allEntries = true)
     public AlunoView inserir(AlunoForm dto) throws ServiceApplicationException {
         Aluno novoAluno = this.alunoMapperForm.map(dto);
         this.alunoRepository.save(novoAluno);
@@ -40,11 +44,14 @@ public class AlunoServiceImpl implements AlunoService {
     }// inserir
 
     @Override
+    @Cacheable(cacheNames = "alunos",key = "#root.method.name")
     public List<AlunoView> listar() throws ServiceApplicationException {
         return alunoMapperView.mapCollection(this.alunoRepository.findByStRegistro1());
     }
 
     @Transactional
+    @Override
+    @CacheEvict(cacheNames = "alunos",allEntries = true)
     public AlunoView alterar(Long matriculaAluno, AlunoForm dto) throws ServiceApplicationException {
         Optional<Aluno> alunoBanco = this.alunoRepository.findAlunoByMatricula(matriculaAluno);
         if (alunoBanco.isEmpty()) {
@@ -57,6 +64,7 @@ public class AlunoServiceImpl implements AlunoService {
 
     @Override
     @Transactional
+    @CacheEvict(cacheNames = "alunos",allEntries = true)
     public void deletar(Long matriculaAluno) throws ServiceApplicationException {
         Optional<Aluno> alunoBanco = this.alunoRepository.findAlunoByMatricula(matriculaAluno);
         if (alunoBanco.isEmpty()) {

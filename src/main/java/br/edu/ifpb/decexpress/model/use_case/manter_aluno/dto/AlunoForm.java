@@ -5,6 +5,7 @@ import br.edu.ifpb.decexpress.utils.LocalDateDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -17,5 +18,5 @@ public record AlunoForm(String nome,
                         String telefone,
                         String email,
                         Endereco endereco,
-                        Long codTurma) {
+                        Long codTurma) implements Serializable {
 }
