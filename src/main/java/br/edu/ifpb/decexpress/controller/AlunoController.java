@@ -43,6 +43,7 @@ public class AlunoController {
 
     @GetMapping
     @Operation(summary = "Listar Alunos")
+    @SecurityDec(accessAllowed = false)
     public ResponseEntity<List<AlunoView>> listarAluno() {
         try {
             return new ResponseEntity<>(this.alunoService.listar(), HttpStatus.OK);
@@ -53,7 +54,7 @@ public class AlunoController {
 
     @PutMapping(value = "/{matriculaAluno}")
     @Operation(summary = "Alterar Aluno por Matrícula")
-    @SecurityDec
+    @SecurityDec()
     public ResponseEntity<AlunoView> alterarAluno(@PathVariable("matriculaAluno") Long matriculaAluno,
                                                   @RequestBody AlunoForm alunoForm) {
         try {
@@ -65,6 +66,7 @@ public class AlunoController {
 
     @GetMapping(value = "/{matriculaAluno}")
     @Operation(summary = "Pesquisar Aluno Por matrícula")
+    @SecurityDec(accessAllowed = false)
     public ResponseEntity<AlunoView> pesquisarAlunoPorMatricula(@PathVariable("matriculaAluno") Long matriculaAluno) {
         try {
             return new ResponseEntity<>(this.alunoService.pesquisarAluno(matriculaAluno), HttpStatus.OK);
@@ -75,7 +77,7 @@ public class AlunoController {
 
     @DeleteMapping(value = "/{matriculaAluno}")
     @Operation(summary = "Deletar aluno por matrícula")
-    @SecurityDec
+    @SecurityDec(accessAllowed = false)
     public ResponseEntity deletarAlunoPorMatricula(@PathVariable("matriculaAluno") Long matriculaAluno) {
         try {
             this.alunoService.deletar(matriculaAluno);

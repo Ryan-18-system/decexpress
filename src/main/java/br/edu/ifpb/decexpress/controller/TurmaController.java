@@ -26,7 +26,7 @@ public class TurmaController {
 
     @GetMapping()
     @Operation(summary = "Listar Turmas")
-    @SecurityDec
+    @SecurityDec(accessAllowed = false)
     public ResponseEntity<List<TurmaView>> listarAllTurmas() {
         List<TurmaView> listaReturn = turmaService.listar();
         if (listaReturn == null || listaReturn.isEmpty()) {

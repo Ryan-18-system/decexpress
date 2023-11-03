@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import java.util.Objects;
 import java.util.logging.Logger;
 
 @Component
@@ -22,12 +23,15 @@ public class DecExpressInterceptor implements HandlerInterceptor {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
             if (handlerMethod.hasMethodAnnotation(SecurityDec.class)
                     || handlerMethod.getBeanType().isAnnotationPresent(SecurityDec.class)) {
+                SecurityDec anotationSecurity = handlerMethod.getMethodAnnotation(SecurityDec.class);
                 String authorizationHeader = request.getHeader("Authorization");
-                if (authorizationHeader != null) {
-                    TokenDTO novoToken = new TokenDTO(authorizationHeader);
-                   boolean tokenValidate = tokenService.authToken(novoToken);
-                    if (!tokenValidate){
+                if (authorizationHeader != null && !Objects.isNull(anotationSecurity)) {
+                    if (!tokenService.authToken(new TokenDTO(authorizationHeader))) {
                         throw new AuthTokenException("erro.nao.autorizado");
+                    }
+                    UsuarioLogadoDTO usuarioLogadoDTO = tokenService.obterInfosUserLogado();
+                    if (!usuarioLogadoDTO.isAdmin() && !anotationSecurity.accessAllowed()) {
+                        throw new AuthTokenException("erro.nao.tem.permissao");
                     }
                 } else {
                     throw new AuthTokenException("erro.ao.obter.token");
