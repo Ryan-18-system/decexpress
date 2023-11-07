@@ -18,6 +18,6 @@ public interface AlunoService {
     void deletar(Long matriculaAluno) throws ServiceApplicationException;
 
     AlunoView pesquisarAluno(Long matriculaAluno) throws  ServiceApplicationException;
-
+    Boolean pesquisarExistenciaDoEmail(String email) throws  ServiceApplicationException;
 
 }

@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Logger;
 
 @RestController
@@ -86,4 +87,17 @@ public class AlunoController {
             throw new RuntimeException(e);
         }
     }
+
+    @GetMapping(value = "/verificar-email/{emailAluno}")
+    @Operation(summary = "Pesquisar Email")
+    public ResponseEntity<Boolean> pesquisarExistenciaDoEmail(@PathVariable("emailAluno") String email) {
+        try {
+            Boolean retorno = this.alunoService
+                    .pesquisarExistenciaDoEmail(email.trim().toUpperCase(Locale.ROOT));
+            return new ResponseEntity<>(retorno, HttpStatus.OK);
+        } catch (ServiceApplicationException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

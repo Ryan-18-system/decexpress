@@ -81,4 +81,13 @@ public class AlunoServiceImpl implements AlunoService {
         }
         return this.alunoMapperView.map(alunoBanco.get());
     }// pesquisar
+
+    @Override
+    public Boolean pesquisarExistenciaDoEmail(String email) throws ServiceApplicationException {
+        Optional<Aluno> aluoPesquisado = this.alunoRepository.findAlunoByEmail(email);
+        if(aluoPesquisado.isPresent()){
+            throw new ServiceApplicationException("erro.email.ja.existe");
+        }
+        return Boolean.FALSE;
+    }// pesquisar existencia do email
 }
