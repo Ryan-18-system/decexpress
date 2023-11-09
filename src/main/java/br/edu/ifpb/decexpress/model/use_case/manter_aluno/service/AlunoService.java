@@ -19,5 +19,6 @@ public interface AlunoService {
 
     AlunoView pesquisarAluno(Long matriculaAluno) throws  ServiceApplicationException;
     Boolean pesquisarExistenciaDoEmail(String email) throws  ServiceApplicationException;
+    AlunoView pesquisarAlunoPorEmail(String email) throws  ServiceApplicationException;
 
 }
