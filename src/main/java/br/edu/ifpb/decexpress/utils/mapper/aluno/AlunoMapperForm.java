@@ -34,6 +34,7 @@ public class AlunoMapperForm implements Mapper<AlunoForm, Aluno> {
         alunoBanco.setNome(dto.nome());
         alunoBanco.setTelefone(Long.valueOf(dto.telefone()));
         alunoBanco.setRg(dto.rg());
+        alunoBanco.setCpf(dto.cpf());
         if (!Objects.isNull(dto.codTurma())) {
             alunoBanco.setCodTurma(new Turma(dto.codTurma()));
         }

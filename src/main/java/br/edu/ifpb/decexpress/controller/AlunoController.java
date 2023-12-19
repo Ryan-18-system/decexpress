@@ -43,7 +43,6 @@ public class AlunoController {
 
     @GetMapping
     @Operation(summary = "Listar Alunos")
-    @SecurityDec(accessAllowed = false)
     public ResponseEntity<List<AlunoView>> listarAluno() {
         try {
             return new ResponseEntity<>(this.alunoService.listar(), HttpStatus.OK);
@@ -64,7 +63,7 @@ public class AlunoController {
         }
     }
 
-    @GetMapping(value = "/{matriculaAluno}")
+    @GetMapping(value = "matricula/{matriculaAluno}")
     @Operation(summary = "Pesquisar Aluno Por matrícula")
     @SecurityDec()
     public ResponseEntity<AlunoView> pesquisarAlunoPorMatricula(@PathVariable("matriculaAluno") Long matriculaAluno) {
@@ -103,7 +102,7 @@ public class AlunoController {
     @Operation(summary = "Pesquisar Aluno Por Email")
     public ResponseEntity<AlunoView> pesquisarAlunoPorEmail(@PathVariable("email") String email) {
         try {
-            return new ResponseEntity<>(this.alunoService.pesquisarAlunoPorEmail(email), HttpStatus.OK);
+            return new ResponseEntity<>(this.alunoService.pesquisarAlunoPorEmail(email.trim().toUpperCase()), HttpStatus.OK);
         } catch (ServiceApplicationException e) {
             throw new RuntimeException(e);
         }

@@ -15,7 +15,7 @@ public interface AlunoRepository extends JpaRepository<Aluno, Long> {
 
     @Query("from Aluno where matricula = :matriculaAluno")
     Optional<Aluno> findAlunoByMatricula(@Param("matriculaAluno")Long matriculaAluno);
-    @Query("from Aluno where email = :emailAluno")
+    @Query("from Aluno a where a.email = :emailAluno")
     Optional<Aluno> findAlunoByEmail(@Param("emailAluno")String emailAluno);
 
     @Query(value = " SELECT * FROM dec_express.tb_aluno aa WHERE aa.st_registro  = 1", nativeQuery = true)

@@ -70,6 +70,7 @@ public class AlunoServiceImpl implements AlunoService {
         if (alunoBanco.isEmpty()) {
             throw new ServiceApplicationException("erro.aluno.nao.encontrado");
         }
+        alunoBanco.get().setCodTurma(null);
         alunoBanco.get().setStRegistro(GlobalConstantes.ST_INATIVO);
     }// deletar
 
